@@ -1,3 +1,6 @@
+"""
+udyndns - entry point
+"""
 import asyncio
 import json
 import logging

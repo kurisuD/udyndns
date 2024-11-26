@@ -1,3 +1,6 @@
+"""
+udyndns
+"""
 import asyncio
 import logging
 from typing import Optional
@@ -92,19 +95,16 @@ def update_ovh_dyn_dns(fqdn: str, ip: str, username: str, password: str) -> bool
             if new_ip_resp.ok:
                 logging.info(f"New IP results: {new_ip_resp.text}")
                 return True
-            else:
-                logging.warning(new_ip_resp.status_code)
-                logging.warning(new_ip_resp.reason)
-                return False
-        else:
-            logging.info(f"Our unifi API retrieved IP {ip} is the same as our current IP: {current}")
-            return True
-    else:
-        logging.error(f"Unable to authenticate to the {current_ip_url}")
-        logging.error(current_ip_resp.status_code)
-        logging.error(current_ip_resp.reason)
-        logging.error(current_ip_resp.text)
-        return False
+            logging.warning(new_ip_resp.status_code)
+            logging.warning(new_ip_resp.reason)
+            return False
+        logging.info(f"Our unifi API retrieved IP {ip} is the same as our current IP: {current}")
+        return True
+    logging.error(f"Unable to authenticate to the {current_ip_url}")
+    logging.error(current_ip_resp.status_code)
+    logging.error(current_ip_resp.reason)
+    logging.error(current_ip_resp.text)
+    return False
 
 
 __all__ = ["get_wan_ip", "update_ovh_dyn_dns"]

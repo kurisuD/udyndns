@@ -1,9 +1,12 @@
+"""
+udyndns setup files
+"""
 # coding=utf-8
 import setuptools
 
 from udyndns.version import __version__
 
-with open("README.md") as fh:
+with open("README.md", encoding='utf8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
