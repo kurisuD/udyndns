@@ -9,7 +9,7 @@ from __init__ import get_wan_ip, update_ovh_dyn_dns
 
 def main():
     """
-    Update OVH dyndns based on the WAN IP retrieved from the unifi API since unadyn is so stubbornly unable to do so.
+    Updates OVH dyndns based on the WAN IP retrieved from the unifi API since unadyn is so stubbornly unable to do so.
     """
     udyndns_config_file = Path("~").expanduser() / ".udyndns.json"
     if not udyndns_config_file.exists():

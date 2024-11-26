@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from typing import Optional
 
 import aiounifi
 import requests
@@ -9,15 +10,23 @@ from aiounifi.models.configuration import Configuration
 from requests.auth import HTTPBasicAuth
 
 
-async def get_wan_ip(host: str, username: str, port: int, password: str, timeout: int = 10) -> [str | None]:
+async def get_wan_ip(host: str, port: int, username: str, password: str, timeout: int = 10) -> [Optional[str]]:
     """
-    returns the WAN IP address of the unifi gateway
-    :param host:
-    :param username:
-    :param port:
-    :param password:
-    :param timeout:
-    :return:
+    obtains the WAN IP address of the unifi gateway
+
+    :param host: hostname or ip address of your unifi gateway / dream machine / ...
+    :param port: port to your unifi gateway / dream machine / ...
+    :param username: username to authenticate on your unifi device.
+    :param password: password to authenticate on your unifi device.
+    :param timeout: number of seconds to wait for your unifi device to respond.
+    :return: the WAN IP address of the unifi gateway / dream machine / ...
+    :type host: str
+    :type port: int
+    :type username: str
+    :type password: str
+    :type timeout: int
+    :rtype: str | None
+
     """
     async with ClientSession() as _session:
         _config = Configuration(session=_session, host=host, username=username, port=port, password=password)
@@ -54,12 +63,17 @@ async def get_wan_ip(host: str, username: str, port: int, password: str, timeout
 
 def update_ovh_dyn_dns(fqdn: str, ip: str, username: str, password: str) -> bool:
     """
-
-    :param fqdn:
-    :param ip:
-    :param password:
-    :param username:
-    :return:
+    Updates the OVH Dyndns's registered wan ip address for your domain, if necessary.
+    :param fqdn: The fully qualified domain name to be updated.
+    :param ip: the wan ip address to be used for the update.
+    :param username: your ovh dyndns username for updating this fqdn.
+    :param password: your ovh dyndns password for updating this fqdn.
+    :return: True on success, False otherwise.
+    :type fqdn: str
+    :type ip: str
+    :type username: str
+    :type password: str
+    :rtype: bool
     """
     logging.info(f"Checking dynamic DNS for {fqdn}")
     session = requests.Session()
@@ -84,11 +98,13 @@ def update_ovh_dyn_dns(fqdn: str, ip: str, username: str, password: str) -> bool
                 return False
         else:
             logging.info(f"Our unifi API retrieved IP {ip} is the same as our current IP: {current}")
+            return True
     else:
         logging.error(f"Unable to authenticate to the {current_ip_url}")
         logging.error(current_ip_resp.status_code)
         logging.error(current_ip_resp.reason)
         logging.error(current_ip_resp.text)
         return False
+
 
 __all__ = ["get_wan_ip", "update_ovh_dyn_dns"]
