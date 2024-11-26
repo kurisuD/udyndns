@@ -1,2 +1,3 @@
-aiounifi
+aiounifi>=80
+requests
 pap_logger

@@ -19,7 +19,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/KurisuD/udyndns",
     packages=setuptools.find_packages(),
-    install_requires=['aiounifi', 'pap_logger'],
+    install_requires=['aiounifi >= 80', 'pap_logger'],
     classifiers=[
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.10",
