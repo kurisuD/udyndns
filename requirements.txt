@@ -1,2 +1,2 @@
-aiounifi~=80
+aiounifi
 pap_logger
