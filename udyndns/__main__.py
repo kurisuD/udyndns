@@ -4,7 +4,7 @@ import logging
 import sys
 from pathlib import Path
 
-from __init__ import get_wan_ip, update_ovh_dyn_dns
+from udyndns import get_wan_ip, update_ovh_dyn_dns
 
 
 def main():
