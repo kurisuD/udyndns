@@ -39,7 +39,7 @@ async def get_wan_ip(host: str, port: int, username: str, password: str, timeout
                 await api.login()
         except aiounifi.Unauthorized as err:
             logging.warning(f"Connected to {host}:{port} but user {username} is not registered: {err}")
-
+            raise err
         except (
                 TimeoutError,
                 aiounifi.BadGateway,

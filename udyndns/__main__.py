@@ -7,6 +7,8 @@ import logging
 import sys
 from pathlib import Path
 
+from aiounifi import Unauthorized
+
 from udyndns import get_wan_ip, update_ovh_dyn_dns
 
 
@@ -33,6 +35,12 @@ if __name__ == '__main__':
     p = PaPLogger(level=logging.INFO)
     try:
         main()
+    except FileNotFoundError as e:
+        logging.error(f"Sorry, we could not proceed: {e}")
+        sys.exit(1)
+    except Unauthorized as e:
+        logging.error(f"Sorry, we could authenticate to a unifi device: {e}")
+        sys.exit(1)
     except Exception as e:
         logging.error(f"Sorry, we could not proceed: {e}")
         sys.exit(1)
