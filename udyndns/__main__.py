@@ -9,6 +9,7 @@ from pathlib import Path
 
 from aiounifi import Unauthorized
 from requests import RequestException
+from pap_logger import PaPLogger
 
 from udyndns import get_wan_ip, update_ovh_dyn_dns
 
@@ -29,14 +30,16 @@ def main():
             logging.info(f"Will check and update {fqdn} with {wan_ip} if necessary")
             update_ovh_dyn_dns(**ovh_config)
 
+def _pipx_main():
 
-if __name__ == '__main__':
-    from pap_logger import PaPLogger
-
-    p = PaPLogger(level=logging.INFO)
+    _ = PaPLogger(level=logging.INFO)
     try:
         main()
         sys.exit(0)
     except (FileNotFoundError, Unauthorized, RequestException) as e:
         logging.error(f"Sorry, we could not proceed: {e}")
         sys.exit(1)
+
+
+if __name__ == '__main__':
+    _pipx_main()

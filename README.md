@@ -31,6 +31,10 @@ A config file is to be created at `~/.udyndns.json`
 }
 ```
 
+Recommended installation step:
+pipx run udyndns
+
+
 Running this command every hour can be done with the following crontab:
 
-`0 * * * * python3 -m udyndns`
+`0 * * * * ~/.local/bin/udyndns`

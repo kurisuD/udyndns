@@ -28,4 +28,9 @@ setuptools.setup(
         "Topic :: Home Automation",
         "Topic :: Internet :: Name Service (DNS)"
     ],
+    entry_points={
+        "console_scripts": [
+            "udyndns = udyndns.__main__:_pipx_main"
+        ]
+    }
 )
